@@ -1,0 +1,13 @@
+FROM node:22
+
+RUN mkdir /app
+
+WORKDIR /app
+
+COPY miniapplication app
+
+RUN npm install -g @angular/cli
+RUN yarn install
+CMD ["yarn", "run","ng", "serve", "--host", "0.0.0.0"]
+
+EXPOSE 4200

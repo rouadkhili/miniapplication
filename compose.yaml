@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - postgres_PASSWORD=1234
+      - postgres_USER=postgres
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - C:\miniapplication\postgres_data:/var/lib/postgressql/data
+    
+    ports:
+      - "5432:5432"
+  frontend:
+    build: 
+      dockerfile: miniapplication\dockerfile
+    ports:
+      - 4200:4200
+    environment:
+       db-url: jdbc:postgresql://db:5432/hw
+       db-username: postgres
+       db-password: 1234 
+    depends_on:
+      - db
+    
+
+  
+
