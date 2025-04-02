@@ -1,13 +1,14 @@
-FROM node:22
+# Utiliser une image de base OpenJDK pour exécuter l'application Spring Boot
+FROM openjdk:17-jdk-slim
 
-RUN mkdir /app
-
+# Spécifier le répertoire de travail
 WORKDIR /app
 
-COPY miniapplication app
+# Copier le fichier JAR du backend dans le container
+COPY target/*.jar backend-app.jar
 
-RUN npm install -g @angular/cli
-RUN yarn install
-CMD ["yarn", "run","ng", "serve", "--host", "0.0.0.0"]
+# Exposer le port utilisé par Spring Boot
+EXPOSE 8080
 
-EXPOSE 4200
+# Exécuter l'application Spring Boot
+ENTRYPOINT ["java", "-jar", "backend-app.jar"]
